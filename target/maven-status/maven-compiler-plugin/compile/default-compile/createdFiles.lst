@@ -1,0 +1,11 @@
+checkservice\service\CheckServiceConfiguration.class
+checkservice\service\NdsRequest2.class
+checkservice\service\ObjectFactory.class
+checkservice\service\CheckServiceApplication.class
+checkservice\service\CheckServiceClient.class
+checkservice\service\NdsRequest2$NP.class
+checkservice\service\FNSNDSCAWS2Port.class
+checkservice\service\package-info.class
+checkservice\service\FNSNDSCAWS2.class
+checkservice\service\NdsResponse2$NP.class
+checkservice\service\NdsResponse2.class
