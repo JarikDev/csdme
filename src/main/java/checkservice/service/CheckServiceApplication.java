@@ -1,64 +1,30 @@
 package checkservice.service;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+
 
 @SpringBootApplication
 public class CheckServiceApplication {
     public static void main(String[] args) {
-
+        org.slf4j.Logger log = LoggerFactory.getLogger(CheckServiceApplication.class);
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(CheckServiceConfiguration.class);
         CheckServiceClient checkServiceClient = context.getBean(CheckServiceClient.class);
         NdsResponse2 ndsResponse2 = checkServiceClient.getNdsResponse2();
-        System.out.println("####################################");
-        System.out.println(ndsResponse2.getNP().get(0).getDT());
-        System.out.println(ndsResponse2.getNP().get(0).getINN());
-        System.out.println(ndsResponse2.getNP().get(0).getKPP());
-        System.out.println(ndsResponse2.getNP().get(0).getState());
-        System.out.println("####################################");
-        int responseStatus = Integer.parseInt(ndsResponse2.getNP().get(0).getState());
-        switch (responseStatus) {
-            case 0:
-                System.out.println("Налогоплательщик зарегистрирован в ЕГРН и имел статус действующего в указанную дату");
-                break;
-            case 1:
-                System.out.println("Налогоплательщик зарегистрирован в ЕГРН, но не имел статус действующего в указанную дату");
-                break;
-            case 2:
-                System.out.println("Налогоплательщик зарегистрирован в ЕГРН");
-                break;
-            case 3:
-                System.out.println("Налогоплательщик с указанным ИНН зарегистрирован в ЕГРН, КПП не соответствует ИНН или не указан");
-                break;
-            case 4:
-                System.out.println("Налогоплательщик с указанным ИНН не зарегистрирован в ЕГРН");
-                break;
-            case 5:
-                System.out.println("Некорректный ИНН");
-                break;
-            case 6:
-                System.out.println("Недопустимое количество символов ИНН");
-                break;
-            case 7:
-                System.out.println("Недопустимое количество символов КПП");
-                break;
-            case 8:
-                System.out.println("Недопустимые символы в ИНН");
-                break;
-            case 9:
-                System.out.println("Недопустимые символы в КПП");
-                break;
-            case 10:
-                System.out.println("КПП не должен использоваться при проверке ИП");
-                break;
-            case 11:
-                System.out.println("некорректный формат даты");
-                break;
-            case 12:
-                System.out.println("некорректная дата (ранее 01.01.1991 или позднее текущей даты)");
-                break;
+        log.info("####################################");
+        log.info("Дата проверки: " + ndsResponse2.getNP().get(0).getDT());
+        log.info("Проверяемый ИНН: "+ ndsResponse2.getNP().get(0).getINN());
+        log.info("Проверяемый КПП: "+ ndsResponse2.getNP().get(0).getKPP());
+        log.info("Вернувшийся статус ответа сервиса: "+ ndsResponse2.getNP().get(0).getState());
+        log.info("####################################");
+        String statusEncrypt= new CSResponceMessage().getResponceMessage(Integer.parseInt(ndsResponse2.getNP().get(0).getState()));
+        log.info("Расшифровка статуса: "+statusEncrypt);
+
+
 
         }
 
     }
-}
+
