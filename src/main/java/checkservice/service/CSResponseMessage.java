@@ -1,9 +1,9 @@
 package checkservice.service;
 
-public class CSResponceMessage {
+public class CSResponseMessage {
     String responceMesage;
 
-    public String getResponceMessage(int status) {
+    public String getResponseMessage(int status) {
         switch (status) {
             case 0:
                 responceMesage = "Налогоплательщик зарегистрирован в ЕГРН и имел статус действующего в указанную дату.";
